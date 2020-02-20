@@ -95,11 +95,11 @@ public class Library {
         this.books = books;
     }
 
-    public List<Integer> getBooksToSend(Set<Integer> remainingBooks, int activationDay, int totalDay){
+    public ArrayList<Integer> getBooksToSend(Set<Integer> remainingBooks, int activationDay, int totalDay){
         int activityDay = totalDay - activationDay- numDaysSignup;
         int numSent = 0;
         int totalBooksToSend = activityDay * booksPerDay;
-        List<Integer> ret =  new ArrayList<Integer>();
+        ArrayList<Integer> ret =  new ArrayList<Integer>();
 
         Map<Integer, Integer> sorted = this.books
                 .entrySet()

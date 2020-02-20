@@ -9,13 +9,22 @@ public class LibraryScoreSolver {
     private int numDays;
     private int remainingSignupDays=0;
     private List<Library> chosenLibraries;
-    private Map<Integer, List<Integer>> sentBooks;
+    private Map<Integer, ArrayList<Integer>> sentBooks;
 
     public LibraryScoreSolver(Set<Library> libraries, Set<Integer> books, int numDays) {
         this.libraries = libraries;
         this.books = books;
         this.numDays = numDays;
         this.chosenLibraries = new ArrayList<>();
+        this.sentBooks = new HashMap<>();
+    }
+
+    public List<Library> getChosenLibraries() {
+        return chosenLibraries;
+    }
+
+    public Map<Integer, ArrayList<Integer>> getSentBooks() {
+        return sentBooks;
     }
 
     public List<String> solution() {

@@ -1,5 +1,6 @@
 package hashcode2020;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class MathSorcerer {
@@ -61,13 +62,20 @@ public class MathSorcerer {
         List<String[]> result = new ArrayList<>();
 
         String[] head = new String[1];
-        //head=libraries scelte.size;
-        //result.add(head);
-        for (libreria : librerie) {
-            String[] ring1 = null; //ring Id libreria, libriassociati alla singola libreria.size
-            String[] ring2 = null;//libriassociati;
+        head[0]=String.valueOf(soluzioneScore.getChosenLibraries().size());
+        result.add(head);
+        for (Library libreria : soluzioneScore.getChosenLibraries()) {
+            String[] ring1=new String[2];
+            ring1[0]=String.valueOf(libreria.getIdLibrary());
+            ring1[1]=String.valueOf(soluzioneScore.getSentBooks().size());//ring Id libreria, libriassociati alla singola libreria.size
+            Integer[] ring2 = new Integer[soluzioneScore.getSentBooks().size()];
+            String[] ring2vero = new String[soluzioneScore.getSentBooks().size()];
+            ring2=soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).toArray(ring2);
+            for (int i=0; i<soluzioneScore.getSentBooks().size(); i++){
+                ring2vero[i]=String.valueOf(ring2[i]);
+            }
             result.add(ring1);
-            result.add(ring2);
+            result.add(ring2vero);
         }
         return result;
     }
