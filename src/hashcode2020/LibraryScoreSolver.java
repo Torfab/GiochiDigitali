@@ -9,6 +9,7 @@ public class LibraryScoreSolver {
     private int numDays;
     private int remainingSignupDays=0;
     private List<Library> chosenLibraries;
+    private Map<Integer, List<Integer>> sentBooks;
 
     public LibraryScoreSolver(Set<Library> libraries, Set<Integer> books, int numDays) {
         this.libraries = libraries;
@@ -22,7 +23,7 @@ public class LibraryScoreSolver {
         /*
         * fino al giorno d:
         * 1) se non ci sono signup in corso: seleziono la libreria con lo score maggiore e ne attivo il signup
-        * 2) per ogni libreria attivata: inserisco i nuovi libri da inviare (i primi booksPerDay della lista ordinata di libri per score [controllo libro già inviato] <-- TODO scegliamo bene  da dove mandare i libri duplicati)
+        * 2) per ogni libreria attivata: inserisco i nuovi libri da inviare (i primi booksPerDay della lista ordinata di libri per score [controllo libro già inviato] <-- NOTA: scegliamo bene  da dove mandare i libri duplicati)
         * */
 
         for(int day = 0; day < numDays; day++){
@@ -42,11 +43,13 @@ public class LibraryScoreSolver {
                     chosenLibraries.add(selectedLibrary);
                     libraries.remove(selectedLibrary);
                     remainingSignupDays=selectedLibrary.getNumDaysSignup();
+                    sentBooks.put(selectedLibrary.getIdLibrary(), selectedLibrary.getBooksToSend(books, day, numDays));
+
+                    for(Integer id : selectedLibrary.getBooksToSend(books,day, numDays)){
+                        books.remove(id);
+                    }
                 }
             }
-
-            //TODO: togli dal set di libri tutti i libri che verranno inviati dalla libreria scelta
-            //oer ogni libreria attiva scgliamo i libri
         }
         return null;
     }

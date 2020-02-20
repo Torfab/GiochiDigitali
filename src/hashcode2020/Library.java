@@ -1,16 +1,19 @@
 package hashcode2020;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
+
+import static java.util.Map.Entry.comparingByValue;
+import static java.util.stream.Collectors.toMap;
 
 public class Library {
+    private int idLibrary;
     private Float numBooks;
     private int numDaysSignup;
     private int booksPerDay;
     private Map<Integer,Integer> books;
 
-    public Library(Float numBooks, int numDaysSignup, int booksPerDay) {
+    public Library(int idLibrary, Float numBooks, int numDaysSignup, int booksPerDay) {
+        this.idLibrary = idLibrary;
         this.numBooks = numBooks;
         this.numDaysSignup = numDaysSignup;
         this.booksPerDay = booksPerDay;
@@ -58,7 +61,7 @@ public class Library {
     public float getLibraryScore(int numDays, int signupStartDay){
         //NOTE: potremmo passare il set dei libri rimasti per calcolare meglio la media
         int activityDays = numDays - signupStartDay - numDaysSignup;
-        Float mediumScore = getMediumScore(); //TODO: si può fare di meglio
+        Float mediumScore = getMediumScore(); //TODO: si può fare di meglio (ad esempio considera i libri già inviati)
 
         return activityDays * mediumScore * booksPerDay;
     }
@@ -76,4 +79,45 @@ public class Library {
         return sum/numBooks;
     }
 
+    public int getIdLibrary() {
+        return idLibrary;
+    }
+
+    public void setIdLibrary(int idLibrary) {
+        this.idLibrary = idLibrary;
+    }
+
+    public Map<Integer, Integer> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Map<Integer, Integer> books) {
+        this.books = books;
+    }
+
+    public List<Integer> getBooksToSend(Set<Integer> remainingBooks, int activationDay, int totalDay){
+        int activityDay = totalDay - activationDay- numDaysSignup;
+        int numSent = 0;
+        int totalBooksToSend = activityDay * booksPerDay;
+        List<Integer> ret =  new ArrayList<Integer>();
+
+        Map<Integer, Integer> sorted = this.books
+                .entrySet()
+                .stream()
+                .sorted(comparingByValue())
+                .collect(
+                        toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
+                                LinkedHashMap::new));
+
+        for(Integer i : sorted.keySet()){
+            if(remainingBooks.contains(i)){
+                ret.add(i);
+                numSent++;
+                if(numSent >= totalBooksToSend){
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
 }

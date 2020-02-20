@@ -32,7 +32,7 @@ public class MathSorcerer {
         int rowIndex = 2;
         Library library;
         for(int i = 0; i < numLibraries; i++){
-            library = new Library(Float.parseFloat(content.get(rowIndex)[0]),Integer.parseInt(content.get(rowIndex)[1]),Integer.parseInt(content.get(rowIndex)[2]));
+            library = new Library(i, Float.parseFloat(content.get(rowIndex)[0]),Integer.parseInt(content.get(rowIndex)[1]),Integer.parseInt(content.get(rowIndex)[2]));
             rowIndex++;
             for(String s : content.get(rowIndex)){
                 int id = Integer.parseInt(s);
