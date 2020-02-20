@@ -19,7 +19,7 @@ public class ReadFromFile {
             List<String[]> fileContent = new ArrayList<>();
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                System.out.println(line);
+                //System.out.println(line);
                 String[] elements = line.split(" ");
                 fileContent.add(elements);
             }
@@ -31,11 +31,11 @@ public class ReadFromFile {
             System.out.println("righe in file: " + fileContent.size());
             int i = 0;
             for (String[] element : fileContent) {
-                System.out.println("Riga " + i + " contiene: ");
+                //System.out.println("Riga " + i + " contiene: ");
                 for (int j = 0; j < element.length; j++) {
-                    System.out.print(element[j] + " ");
+                   // System.out.print(element[j] + " ");
                 }
-                System.out.print("\n");
+                //System.out.print("\n");
                 i++;
             };
 

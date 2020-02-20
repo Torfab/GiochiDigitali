@@ -1,50 +1,64 @@
 package hashcode2020;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MathSorcerer {
 
 
-    private int maxSlices;
-    private int numberOfTypesOfPizza;
-    private List<String> typeOfPizza;
-    int[] slices;
+    private int numBooks;
+    private int numLibraries;
+    private int numDays;
+    Map<Integer, Integer> books;
+    Set<Library> libararies;
     List<String> result;
 
-    private SoluzioneStupida soluzioneStupida;
-    private SoluzioneStackOverflow soluzioneStackOverflow;
-    private SoluzioneGiorgio soluzioneGiorgio;
+
+    private LibraryScoreSolver soluzioneScore;
 
     public MathSorcerer(List<String[]> content) {
-        maxSlices = Integer.parseInt(content.get(0)[0]);
-        numberOfTypesOfPizza = Integer.parseInt(content.get(0)[1]);
-        typeOfPizza = new ArrayList();
-        slices = new int[content.get(1).length];
-        for (int j = 0; j < content.get(1).length; j++) {
-            slices[j] = Integer.parseInt(content.get(1)[j]);
+
+        this.numBooks = Integer.parseInt(content.get(0)[0]);
+        this.numLibraries = Integer.parseInt(content.get(0)[1]);
+        this.numDays = Integer.parseInt(content.get(0)[2]);
+        this.libararies = new HashSet<>();
+
+        this.books = new HashMap<>();
+        int index = 0;
+        for (String s : content.get(1)) {
+            int score = Integer.parseInt(s);
+            books.put(index, score);
+            index++;
         }
+        int rowIndex = 2;
+        Library library;
+        for(int i = 0; i < numLibraries; i++){
+            library = new Library(Float.parseFloat(content.get(rowIndex)[0]),Integer.parseInt(content.get(rowIndex)[1]),Integer.parseInt(content.get(rowIndex)[2]));
+            rowIndex++;
+            for(String s : content.get(rowIndex)){
+                int id = Integer.parseInt(s);
+                library.addBook(id, books.get(id));
+            }
+            rowIndex++;
+
+            libararies.add(library);
+        }
+
+        soluzioneScore = new LibraryScoreSolver(libararies, books.keySet(), numDays);
         result = new ArrayList<>();
-        soluzioneStupida = new SoluzioneStupida(slices, maxSlices);
-        soluzioneStackOverflow = new SoluzioneStackOverflow(slices, maxSlices);
-        soluzioneGiorgio =  new SoluzioneGiorgio(slices,maxSlices);
     }
 
 
     public List<String[]> grind() {
 
-        //result = soluzioneStupida.solution();
-        //result = soluzioneStackOverflow.solution();
-        result = soluzioneGiorgio.solution();
+        result = soluzioneScore.solution();
 
         return resultConverter(result);
 
     }
 
 
-
     public List<String[]> resultConverter(List<String> typeOfPizza) {
-        List<String[]> result = new ArrayList<>();
+        /*List<String[]> result = new ArrayList<>();
 
         String[] head = new String[1];
         String[] tail = new String[typeOfPizza.size()];
@@ -58,7 +72,8 @@ public class MathSorcerer {
         }
         result.add(head);
         result.add(tail);
-        return result;
+        return result;*/
+        return null;
     }
 
 }
