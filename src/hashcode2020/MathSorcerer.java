@@ -58,22 +58,18 @@ public class MathSorcerer {
 
 
     public List<String[]> resultConverter(List<String> typeOfPizza) {
-        /*List<String[]> result = new ArrayList<>();
+        List<String[]> result = new ArrayList<>();
 
         String[] head = new String[1];
-        String[] tail = new String[typeOfPizza.size()];
-        head[0] = String.valueOf(typeOfPizza.size());
-
-        int i = 0;
-        for (
-                String pizza : typeOfPizza) {
-            tail[i] = pizza;
-            i++;
+        //head=libraries scelte.size;
+        //result.add(head);
+        for (libreria : librerie) {
+            String[] ring1 = null; //ring Id libreria, libriassociati alla singola libreria.size
+            String[] ring2 = null;//libriassociati;
+            result.add(ring1);
+            result.add(ring2);
         }
-        result.add(head);
-        result.add(tail);
-        return result;*/
-        return null;
+        return result;
     }
 
 }
