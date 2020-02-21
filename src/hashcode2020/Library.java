@@ -72,7 +72,7 @@ public class Library {
     }
 
     private Float getPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
-        if(numBooks == 0f){
+        if(maxBooksToSend <= 0f){
             return 0f;
         }
 
