@@ -35,6 +35,11 @@ public class LibraryScoreSolver {
         * 2) per ogni libreria attivata: inserisco i nuovi libri da inviare (i primi booksPerDay della lista ordinata di libri per score [controllo libro già inviato] <-- NOTA: scegliamo bene  da dove mandare i libri duplicati)
         * */
 
+        /**
+         * NOTA: dopo aver selezionato la libreria con lo score maggiore potremmo valutare il numero di giorni di inattività della libreria prima del termine di numDays, e
+         * cercare eventualmente la libreria migliore che abbia un numero di giorni di attivazione minore di questo numero di giorni di inattività, ed eventualmente poi inserire entrambe le librerie.
+         */
+
         for(int day = 0; day < numDays; day++){
             if(remainingSignupDays--<=0){
                 Library selectedLibrary = null;
