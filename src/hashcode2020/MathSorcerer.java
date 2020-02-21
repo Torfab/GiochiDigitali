@@ -67,9 +67,9 @@ public class MathSorcerer {
         for (Library libreria : soluzioneScore.getChosenLibraries()) {
             String[] ring1=new String[2];
             ring1[0]=String.valueOf(libreria.getIdLibrary());
-            ring1[1]=String.valueOf(soluzioneScore.getSentBooks().size());//ring Id libreria, libriassociati alla singola libreria.size
-            Integer[] ring2 = new Integer[soluzioneScore.getSentBooks().size()];
-            String[] ring2vero = new String[soluzioneScore.getSentBooks().size()];
+            ring1[1]=String.valueOf(soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size());
+            Integer[] ring2 = new Integer[soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size()];
+            String[] ring2vero = new String[soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size()];
             ring2=soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).toArray(ring2);
             for (int i=0; i<soluzioneScore.getSentBooks().size(); i++){
                 ring2vero[i]=String.valueOf(ring2[i]);
