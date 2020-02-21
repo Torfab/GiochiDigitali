@@ -58,25 +58,37 @@ public class Library {
                 '}';
     }
 
-    public float getLibraryScore(int numDays, int signupStartDay){
+    public Float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
         //NOTE: potremmo passare il set dei libri rimasti per calcolare meglio la media
         int activityDays = numDays - signupStartDay - numDaysSignup;
-        Float mediumScore = getMediumScore(); //TODO: si può fare di meglio (ad esempio considera i libri già inviati)
 
-        return activityDays * mediumScore * booksPerDay;
+        if(activityDays <= 0){
+            return 0f;
+        }
+
+        int maxBooksToSend = activityDays * booksPerDay;
+
+        return getPotentialScore(books, maxBooksToSend);
     }
 
-    private Float getMediumScore(){
+    private Float getPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
         if(numBooks == 0f){
             return 0f;
         }
 
+        int num = 0;
         Float sum = 0f;
-        for(int score : books.values()){
-            sum += score;
+        for(Map.Entry<Integer, Integer> book : books.entrySet()){
+            if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
+                num++;
+                sum += book.getValue();
+                if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
+                    break;
+                }
+            }
         }
 
-        return sum/numBooks;
+        return sum;
     }
 
     public int getIdLibrary() {
