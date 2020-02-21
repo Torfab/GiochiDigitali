@@ -113,15 +113,22 @@ public class Library {
         int totalBooksToSend = activityDay * booksPerDay;
         ArrayList<Integer> ret =  new ArrayList<Integer>();
 
-        Map<Integer, Integer> sorted = this.books
-                .entrySet()
-                .stream()
-                .sorted(comparingByValue())
-                .collect(
-                        toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
-                                LinkedHashMap::new));
+//        Map<Integer, Integer> sorted = this.books
+//                .entrySet()
+//                .stream()
+//                .sorted(comparingByValue())
+//                .collect(
+//                        toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
+//                                LinkedHashMap::new));
+//        System.out.println(sorted);
 
-        for(Integer i : sorted.keySet()){
+        Map<Integer, Integer> sorted2 = this.books.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
+                toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
+                        LinkedHashMap::new));
+         System.out.println(sorted2);
+
+
+        for(Integer i : sorted2.keySet()){
             if(remainingBooks.contains(i)){
                 ret.add(i);
                 numSent++;
