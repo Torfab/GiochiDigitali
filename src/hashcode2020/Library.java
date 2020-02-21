@@ -11,6 +11,7 @@ public class Library {
     private int numDaysSignup;
     private int booksPerDay;
     private Map<Integer,Integer> books;
+    private StrategieDiScoringLibrerie strategieDiScoringLibrerie=new StrategieDiScoringLibrerie(numDaysSignup, booksPerDay, books);
 
     public Library(int idLibrary, Float numBooks, int numDaysSignup, int booksPerDay) {
         this.idLibrary = idLibrary;
@@ -59,37 +60,10 @@ public class Library {
     }
 
     public Float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
-        //NOTE: potremmo passare il set dei libri rimasti per calcolare meglio la media
-        int activityDays = numDays - signupStartDay - numDaysSignup;
-
-        if(activityDays <= 0){
-            return 0f;
-        }
-
-        int maxBooksToSend = activityDays * booksPerDay;
-
-        return getPotentialScore(books, maxBooksToSend);
+        return strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
     }
 
-    private Float getPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
-        if(maxBooksToSend <= 0f){
-            return 0f;
-        }
 
-        int num = 0;
-        Float sum = 0f;
-        for(Map.Entry<Integer, Integer> book : books.entrySet()){
-            if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
-                num++;
-                sum += book.getValue();
-                if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
-                    break;
-                }
-            }
-        }
-
-        return sum;
-    }
 
     public int getIdLibrary() {
         return idLibrary;
@@ -113,20 +87,10 @@ public class Library {
         int totalBooksToSend = activityDay * booksPerDay;
         ArrayList<Integer> ret =  new ArrayList<Integer>();
 
-//        Map<Integer, Integer> sorted = this.books
-//                .entrySet()
-//                .stream()
-//                .sorted(comparingByValue())
-//                .collect(
-//                        toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
-//                                LinkedHashMap::new));
-//        System.out.println(sorted);
-
         Map<Integer, Integer> sorted2 = this.books.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
                 toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
                         LinkedHashMap::new));
          System.out.println(sorted2);
-
 
         for(Integer i : sorted2.keySet()){
             if(remainingBooks.contains(i)){
@@ -140,3 +104,5 @@ public class Library {
         return ret;
     }
 }
+
+//a pari score, prendere le librerie con più libri e se finisce prima di D prendere quello con meno signup time
