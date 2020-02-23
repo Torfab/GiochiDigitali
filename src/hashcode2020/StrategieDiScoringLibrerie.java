@@ -29,11 +29,30 @@ public class StrategieDiScoringLibrerie {
 
         int maxBooksToSend = activityDays * booksPerDay;
 
-        //return getPotentialScore(books, maxBooksToSend);
-        return fastestToStartScore();
+        return oldGetPotentialScore(books, maxBooksToSend);
+        //return fastestToStartScore();
+        //return remainingDaysAfterFinishingBooks(books, maxBooksToSend);
 
 
 
+    }
+
+    private float remainingDaysAfterFinishingBooks(Set<Integer> remainingBooks, int maxBooksToSend) {
+        int num = 0;
+        int sum = 0;
+
+        for(Map.Entry<Integer, Integer> book : books.entrySet()){
+            if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
+                num++;
+                sum += book.getValue();
+
+                if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
+                    break;
+                }
+            }
+        }
+
+        return 0;
     }
 
 
@@ -42,7 +61,7 @@ public class StrategieDiScoringLibrerie {
         return 1f/(float) this.numDaysToSignup;
     }
 
-    private Float getPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
+    private Float oldGetPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
         if(maxBooksToSend <= 0f){
             return 0f;
         }
@@ -53,6 +72,7 @@ public class StrategieDiScoringLibrerie {
             if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
                 num++;
                 sum += book.getValue();
+                System.out.println("cosa sta contando? "+ sum+ " prova " + book ); //BUGGONE!!!!!!! NON CONTROLLA SE IL LIBRO ESISTE
                 if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
                     break;
                 }

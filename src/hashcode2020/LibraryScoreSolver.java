@@ -57,9 +57,10 @@ public class LibraryScoreSolver {
                     chosenLibraries.add(selectedLibrary);
                     libraries.remove(selectedLibrary);
                     remainingSignupDays=selectedLibrary.getNumDaysSignup();
-                    sentBooks.put(selectedLibrary.getIdLibrary(), selectedLibrary.getBooksToSend(books, day, numDays));
+                    ArrayList<Integer> mbareTiPregoOgniCicloSoSordi = selectedLibrary.getBooksToSend(books, day, numDays);
+                    sentBooks.put(selectedLibrary.getIdLibrary(), mbareTiPregoOgniCicloSoSordi);
 
-                    for(Integer id : selectedLibrary.getBooksToSend(books,day, numDays)){
+                    for(Integer id : mbareTiPregoOgniCicloSoSordi){
                         books.remove(id);
                     }
                 }
