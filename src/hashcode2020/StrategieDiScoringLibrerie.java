@@ -1,6 +1,7 @@
 package hashcode2020;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,8 +35,8 @@ public class StrategieDiScoringLibrerie {
 
         int maxBooksToSend = activityDays * booksPerDay;
 
-        return oldGetPotentialScore(books, maxBooksToSend);
-        //return fastestToStartScore();
+        //return oldGetPotentialScore(books, maxBooksToSend);
+        return fastestToStartScore();
         //return remainingDaysAfterFinishingBooks(books, maxBooksToSend);
 
 
@@ -62,8 +63,7 @@ public class StrategieDiScoringLibrerie {
 
 
     private BigDecimal fastestToStartScore(){
-        BigDecimal temp= BigDecimal.valueOf(1);
-         return temp.divide(BigDecimal.valueOf(this.numDaysToSignup));
+        return BigDecimal.ONE.divide(BigDecimal.valueOf(this.numDaysToSignup), 5 , RoundingMode.HALF_UP);
     }
 
     private BigDecimal oldGetPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){

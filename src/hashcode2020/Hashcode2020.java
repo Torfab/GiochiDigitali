@@ -19,8 +19,6 @@ public class Hashcode2020 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        ReadFromFile reader = new ReadFromFile();
-        WriteToFile writer = new WriteToFile();
         MathSorcerer mathSorcerer;
 
 
@@ -30,7 +28,7 @@ public class Hashcode2020 {
             String filename = keyboard.nextLine();
             List<String[]> result = null;
 
-            List<String[]> content = reader.read(filename);
+            List<String[]> content = ReadFromFile.read(filename);
 
             if (content != null) {
                 mathSorcerer=new MathSorcerer(content);
@@ -38,7 +36,7 @@ public class Hashcode2020 {
             }
 
             if (result != null) {
-                writer.write(result, filename);
+                WriteToFile.write(result, filename);
             }
 
         }

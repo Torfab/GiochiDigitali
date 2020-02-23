@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class ReadFromFile {
 
-    public List<String[]> read(String filename) throws Exception {
+    public static List<String[]> read(String filename) throws Exception {
         // pass the path to the file as a parameter 
         try {
 

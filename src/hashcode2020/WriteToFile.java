@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class WriteToFile {
 
-    public void write(List<String[]> content, String path) throws IOException, FileNotFoundException {
+    public static void write(List<String[]> content, String path) throws IOException, FileNotFoundException {
 
 
         File f = new File("output/" + path);

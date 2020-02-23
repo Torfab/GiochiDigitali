@@ -1,5 +1,6 @@
 package hashcode2020;
 
+import java.io.IOException;
 import java.util.*;
 
 public class MathSorcerer {
@@ -50,9 +51,18 @@ public class MathSorcerer {
     public List<String[]> grind() {
 
         soluzioneScore.solution();
+
+        try {
+            debugWriteToFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return resultConverter();
 
     }
+
+
 
 
     public List<String[]> resultConverter() {
@@ -85,6 +95,17 @@ public class MathSorcerer {
         }
         System.out.println("Lo score del file è " + resultScore);
         return resultToWrite;
+    }
+
+    private void debugWriteToFile() throws IOException {
+        List<String[]> temp = new ArrayList<>();
+        for (Library libreria : soluzioneScore.getChosenLibraries()) {
+            String[] lib = new String[1];
+            lib[0]= String.valueOf(libreria.getIdLibrary());
+            temp.add(lib);
+        }
+
+        WriteToFile.write(temp, "stampa1.txt");
     }
 
 }
