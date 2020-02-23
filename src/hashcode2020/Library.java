@@ -11,7 +11,7 @@ public class Library {
     private int numDaysSignup;
     private int booksPerDay;
     private Map<Integer,Integer> books;
-    private StrategieDiScoringLibrerie strategieDiScoringLibrerie=new StrategieDiScoringLibrerie(numDaysSignup, booksPerDay, books);
+    private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
     public Library(int idLibrary, Float numBooks, int numDaysSignup, int booksPerDay) {
         this.idLibrary = idLibrary;
@@ -19,6 +19,7 @@ public class Library {
         this.numDaysSignup = numDaysSignup;
         this.booksPerDay = booksPerDay;
         books = new HashMap<>();
+        strategieDiScoringLibrerie=new StrategieDiScoringLibrerie(numDaysSignup, booksPerDay, books);
     }
 
     public Float getNumBooks() {
@@ -87,12 +88,12 @@ public class Library {
         int totalBooksToSend = activityDay * booksPerDay;
         ArrayList<Integer> ret =  new ArrayList<Integer>();
 
-        Map<Integer, Integer> sorted2 = this.books.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
+        Map<Integer, Integer> sorted = this.books.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
                 toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
                         LinkedHashMap::new));
-         System.out.println(sorted2);
+         System.out.println(sorted);
 
-        for(Integer i : sorted2.keySet()){
+        for(Integer i : sorted.keySet()){
             if(remainingBooks.contains(i)){
                 ret.add(i);
                 numSent++;

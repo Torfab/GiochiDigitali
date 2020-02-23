@@ -9,9 +9,10 @@ public class MathSorcerer {
     private int numBooks;
     private int numLibraries;
     private int numDays;
-    Map<Integer, Integer> books;
-    Set<Library> libararies;
-    List<String> result;
+    private Map<Integer, Integer> books;
+    private Set<Library> libararies;
+    private List<String> result;
+    private int resultScore;
 
 
     private LibraryScoreSolver soluzioneScore;
@@ -51,33 +52,36 @@ public class MathSorcerer {
 
     public List<String[]> grind() {
 
-        result = soluzioneScore.solution();
-
-        return resultConverter(result);
+        soluzioneScore.solution();
+        return resultConverter();
 
     }
 
 
-    public List<String[]> resultConverter(List<String> typeOfPizza) {
-        List<String[]> result = new ArrayList<>();
+    public List<String[]> resultConverter() {
 
+
+        List<String[]> resultToWrite = new ArrayList<>();
         String[] head = new String[1];
         head[0]=String.valueOf(soluzioneScore.getChosenLibraries().size());
-        result.add(head);
+        resultToWrite.add(head);
         for (Library libreria : soluzioneScore.getChosenLibraries()) {
+            int sizeOfLibreria=soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size();
             String[] ring1=new String[2];
-            ring1[0]=String.valueOf(libreria.getIdLibrary());
-            ring1[1]=String.valueOf(soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size());
-            Integer[] ring2 = new Integer[soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size()];
-            String[] ring2vero = new String[soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size()];
-            ring2=soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).toArray(ring2);
-            for (int i=0; i<soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).size(); i++){
-                ring2vero[i]=String.valueOf(ring2[i]);
-            }
-            result.add(ring1);
-            result.add(ring2vero);
+            ring1[0]=String.valueOf(libreria.getIdLibrary());  //primo elemento stringa 1 libreria
+            ring1[1]=String.valueOf(sizeOfLibreria); //secondo elemento stringa 1 libreria
+
+            Integer[] ring2asInteger = new Integer[sizeOfLibreria];
+            String[] ring2asString = new String[sizeOfLibreria];
+
+            ring2asInteger=soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).toArray(ring2asInteger);
+
+            ring2asString= Utility.convertIntArrayToStringArray(ring2asInteger, ring2asString, sizeOfLibreria);
+
+            resultToWrite.add(ring1);
+            resultToWrite.add(ring2asString);
         }
-        return result;
+        return resultToWrite;
     }
 
 }

@@ -46,7 +46,7 @@ public class LibraryScoreSolver {
                 Float maxScore = 0f;
                 Float currentScore;
                 for(Library lib : libraries){
-                    currentScore = lib.getLibraryScore(numDays, day, books);
+                    currentScore = lib.getLibraryScore(numDays, day, books);  //qui conta
                     if(currentScore > maxScore){
                         selectedLibrary = lib;
                         maxScore = currentScore;
