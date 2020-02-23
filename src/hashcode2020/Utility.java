@@ -7,4 +7,9 @@ public final class Utility {
         }
         return stringArray;
     }
+
+    public static boolean getDebug(){
+        return false;
+        //return true;
+    }
 }

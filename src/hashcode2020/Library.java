@@ -62,7 +62,9 @@ public class Library {
 
     public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
         float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
-        System.out.println("sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore);
+        if(Utility.getDebug()){
+            System.out.println("sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore);
+        }
         return libraryScore;
     }
 

@@ -24,6 +24,10 @@ public class StrategieDiScoringLibrerie {
         int activityDays = numDays - signupStartDay - numDaysToSignup;
 
         if(activityDays <= 0){
+
+            if (Utility.getDebug()) {
+                System.out.print("La libreria non fa in tempo a tirar fuori neanche un libro");
+            }
             return 0f;
         }
 

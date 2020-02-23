@@ -42,10 +42,12 @@ public class LibraryScoreSolver {
 
         for(int day = 0; day < numDays; day++){
             remainingSignupDays--;
-            if (remainingSignupDays<0){
-                System.out.println("Sono già state scelte tutte le librerie");
-            }else {
-                System.out.println("Siamo a giorno " + day + ". Bisogna aspettare altri " + remainingSignupDays + " giorni per poter caricare una nuova libreria");
+            if (Utility.getDebug()) {
+                if (remainingSignupDays < 0) {
+                    System.out.println("Siamo a giorno " + day + ". Sono già state scelte tutte le librerie possibili");
+                } else {
+                    System.out.println("Siamo a giorno " + day + ". Bisogna aspettare altri " + remainingSignupDays + " giorni per poter caricare una nuova libreria");
+                }
             }
             if(remainingSignupDays==0){
                 Library selectedLibrary = null;
