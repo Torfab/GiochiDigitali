@@ -60,7 +60,7 @@ public class Library {
                 '}';
     }
 
-    public Float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
+    public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
         return strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
     }
 

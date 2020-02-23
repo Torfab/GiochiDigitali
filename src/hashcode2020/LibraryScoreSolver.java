@@ -43,8 +43,8 @@ public class LibraryScoreSolver {
         for(int day = 0; day < numDays; day++){
             if(remainingSignupDays--<=0){
                 Library selectedLibrary = null;
-                Float maxScore = 0f;
-                Float currentScore;
+                float maxScore = 0f;
+                float currentScore;
                 for(Library lib : libraries){
                     currentScore = lib.getLibraryScore(numDays, day, books);  //qui conta
                     if(currentScore > maxScore){
