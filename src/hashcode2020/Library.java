@@ -61,7 +61,9 @@ public class Library {
     }
 
     public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
-        return strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
+        float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
+        System.out.println("sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore);
+        return libraryScore;
     }
 
 
@@ -91,8 +93,7 @@ public class Library {
         Map<Integer, Integer> sorted = this.books.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
                 toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
                         LinkedHashMap::new));
-        System.out.println("libreria con id: "+ idLibrary+" elementi: " +sorted);
-        System.out.println("libreria non ordinata invece " +books);
+        //BUG CONTROLLA IL VETTORE SBAGLIATO E QUI I BOOK NON VENGONO MAI RIMOSSI
         for(Integer i : sorted.keySet()){
             if(remainingBooks.contains(i)){
                 ret.add(i);

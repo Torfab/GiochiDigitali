@@ -7,7 +7,7 @@ public class LibraryScoreSolver {
     private Set<Library> libraries;
     private Set<Integer> books;
     private int numDays;
-    private int remainingSignupDays=0;
+    private int remainingSignupDays=1;
     private List<Library> chosenLibraries;
     private Map<Integer, ArrayList<Integer>> sentBooks;
 
@@ -41,7 +41,13 @@ public class LibraryScoreSolver {
          */
 
         for(int day = 0; day < numDays; day++){
-            if(remainingSignupDays--<=0){
+            remainingSignupDays--;
+            if (remainingSignupDays<0){
+                System.out.println("Sono già state scelte tutte le librerie");
+            }else {
+                System.out.println("Siamo a giorno " + day + ". Bisogna aspettare altri " + remainingSignupDays + " giorni per poter caricare una nuova libreria");
+            }
+            if(remainingSignupDays==0){
                 Library selectedLibrary = null;
                 float maxScore = 0f;
                 float currentScore;
@@ -54,6 +60,7 @@ public class LibraryScoreSolver {
                 }
 
                 if(selectedLibrary != null){
+                    System.out.println("Siamo a giorno "+day+" è stata scelta la libreria "+selectedLibrary.getIdLibrary()+" con lo score di "+maxScore+" essa resterà in signup per "+selectedLibrary.getNumDaysSignup()+" giorni");
                     chosenLibraries.add(selectedLibrary);
                     libraries.remove(selectedLibrary);
                     remainingSignupDays=selectedLibrary.getNumDaysSignup();
@@ -65,6 +72,7 @@ public class LibraryScoreSolver {
                     }
                 }
             }
+
         }
         return null;
     }

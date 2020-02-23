@@ -29,8 +29,8 @@ public class StrategieDiScoringLibrerie {
 
         int maxBooksToSend = activityDays * booksPerDay;
 
-        return oldGetPotentialScore(books, maxBooksToSend);
-        //return fastestToStartScore();
+        //return oldGetPotentialScore(books, maxBooksToSend);
+        return fastestToStartScore();
         //return remainingDaysAfterFinishingBooks(books, maxBooksToSend);
 
 
