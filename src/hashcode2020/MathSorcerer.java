@@ -10,7 +10,7 @@ public class MathSorcerer {
     private int numDays;
     private Map<Integer, Integer> booksPool;
     private Map<Integer, Integer> allBooks;
-    private Set<Library> libararies;
+    private SortedSet<Library> libararies;
 
     private LibraryScoreSolver soluzioneScore;
 
@@ -18,7 +18,7 @@ public class MathSorcerer {
 
         this.numLibraries = Integer.parseInt(content.get(0)[1]);
         this.numDays = Integer.parseInt(content.get(0)[2]);
-        this.libararies = new HashSet<>();
+        this.libararies = new TreeSet<>();
 
 
         this.booksPool = new HashMap<>();
@@ -48,16 +48,10 @@ public class MathSorcerer {
     }
 
 
-    public List<String[]> grind() {
+    public List<String[]> grind() throws Exception {
 
         soluzioneScore.solution();
-
-        try {
-            debugWriteToFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+//      debugWriteToFile();
         return resultConverter();
 
     }
@@ -105,7 +99,7 @@ public class MathSorcerer {
             temp.add(lib);
         }
 
-        WriteToFile.write(temp, "stampa1.txt");
+        WriteToFile.write(temp, "debug.txt");
     }
 
 }

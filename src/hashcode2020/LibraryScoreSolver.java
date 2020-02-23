@@ -4,14 +4,14 @@ import java.util.*;
 
 public class LibraryScoreSolver {
 
-    private Set<Library> libraries;
+    private SortedSet<Library> libraries;
     private Set<Integer> books;
     private int numDays;
     private int remainingSignupDays=1;
     private List<Library> chosenLibraries;
     private Map<Integer, ArrayList<Integer>> sentBooks;
 
-    public LibraryScoreSolver(Set<Library> libraries, Set<Integer> books, int numDays) {
+    public LibraryScoreSolver(SortedSet<Library> libraries, Set<Integer> books, int numDays) {
         this.libraries = libraries;
         this.books = books;
         this.numDays = numDays;

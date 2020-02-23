@@ -5,7 +5,7 @@ import java.util.*;
 import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toMap;
 
-public class Library {
+public class Library implements Comparable<Library>{
     private int idLibrary;
     private Float numBooks;
     private int numDaysSignup;
@@ -13,7 +13,7 @@ public class Library {
     private Map<Integer,Integer> books;
     private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
-    public Library(int idLibrary, Float numBooks, int numDaysSignup, int booksPerDay) {
+    public Library (int idLibrary, Float numBooks, int numDaysSignup, int booksPerDay) {
         this.idLibrary = idLibrary;
         this.numBooks = numBooks;
         this.numDaysSignup = numDaysSignup;
@@ -58,6 +58,11 @@ public class Library {
                 ", booksPerDay=" + booksPerDay +
                 ", books=" + books +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Library other) {
+        return Integer.compare(this.idLibrary, other.idLibrary);
     }
 
     public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
