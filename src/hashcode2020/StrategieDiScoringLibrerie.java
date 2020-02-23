@@ -33,8 +33,8 @@ public class StrategieDiScoringLibrerie {
 
         int maxBooksToSend = activityDays * booksPerDay;
 
-        //return oldGetPotentialScore(books, maxBooksToSend);
-        return fastestToStartScore();
+        return oldGetPotentialScore(books, maxBooksToSend);
+        //return fastestToStartScore();
         //return remainingDaysAfterFinishingBooks(books, maxBooksToSend);
 
 
@@ -76,7 +76,9 @@ public class StrategieDiScoringLibrerie {
             if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
                 num++;
                 sum += book.getValue();
-                System.out.println("cosa sta contando? "+ sum+ " prova " + book ); //BUGGONE!!!!!!! NON CONTROLLA SE IL LIBRO ESISTE
+                if(Utility.getDebug()) {
+                    System.out.println("cosa sta contando? " + sum + " prova " + book); //BUGGONE!!!!!!! NON CONTROLLA SE IL LIBRO ESISTE
+                }
                 if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
                     break;
                 }
