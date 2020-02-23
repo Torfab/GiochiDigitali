@@ -1,36 +1,34 @@
 package hashcode2020;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class MathSorcerer {
 
 
-    private int numBooks;
     private int numLibraries;
     private int numDays;
-    private Map<Integer, Integer> books;
+    private Map<Integer, Integer> booksPool;
+    private Map<Integer, Integer> allBooks;
     private Set<Library> libararies;
-    private List<String> result;
-    private int resultScore;
-
 
     private LibraryScoreSolver soluzioneScore;
 
     public MathSorcerer(List<String[]> content) {
 
-        this.numBooks = Integer.parseInt(content.get(0)[0]);
         this.numLibraries = Integer.parseInt(content.get(0)[1]);
         this.numDays = Integer.parseInt(content.get(0)[2]);
         this.libararies = new HashSet<>();
 
-        this.books = new HashMap<>();
+
+        this.booksPool = new HashMap<>();
         int index = 0;
         for (String s : content.get(1)) {
             int score = Integer.parseInt(s);
-            books.put(index, score);
+            this.booksPool.put(index, score);
             index++;
         }
+        this.allBooks=new HashMap<>(this.booksPool);
+
         int rowIndex = 2;
         Library library;
         for(int i = 0; i < numLibraries; i++){
@@ -38,15 +36,14 @@ public class MathSorcerer {
             rowIndex++;
             for(String s : content.get(rowIndex)){
                 int id = Integer.parseInt(s);
-                library.addBook(id, books.get(id));
+                library.addBook(id, this.booksPool.get(id));
             }
             rowIndex++;
 
             libararies.add(library);
         }
 
-        soluzioneScore = new LibraryScoreSolver(libararies, books.keySet(), numDays);
-        result = new ArrayList<>();
+        soluzioneScore = new LibraryScoreSolver(libararies, booksPool.keySet(), numDays);
     }
 
 
@@ -60,7 +57,7 @@ public class MathSorcerer {
 
     public List<String[]> resultConverter() {
 
-
+        int resultScore=0;
         List<String[]> resultToWrite = new ArrayList<>();
         String[] head = new String[1];
         head[0]=String.valueOf(soluzioneScore.getChosenLibraries().size());
@@ -76,11 +73,17 @@ public class MathSorcerer {
 
             ring2asInteger=soluzioneScore.getSentBooks().get(libreria.getIdLibrary()).toArray(ring2asInteger);
 
+            for(Integer book: ring2asInteger){
+                resultScore+=this.allBooks.get(book);
+            }
+
+
             ring2asString= Utility.convertIntArrayToStringArray(ring2asInteger, ring2asString, sizeOfLibreria);
 
             resultToWrite.add(ring1);
             resultToWrite.add(ring2asString);
         }
+        System.out.println("Lo score del file è " + resultScore);
         return resultToWrite;
     }
 

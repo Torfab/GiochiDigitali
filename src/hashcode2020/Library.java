@@ -91,7 +91,6 @@ public class Library {
         Map<Integer, Integer> sorted = this.books.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
                 toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
                         LinkedHashMap::new));
-         System.out.println(sorted);
 
         for(Integer i : sorted.keySet()){
             if(remainingBooks.contains(i)){
