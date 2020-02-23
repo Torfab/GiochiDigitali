@@ -1,6 +1,5 @@
 package hashcode2020;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import static java.util.Map.Entry.comparingByValue;
@@ -61,8 +60,8 @@ public class Library {
                 '}';
     }
 
-    public BigDecimal getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
-        BigDecimal libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
+    public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
+        float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
         if(Utility.getDebug()){
             System.out.println("sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore);
         }
