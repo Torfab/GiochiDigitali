@@ -1,5 +1,6 @@
 package hashcode2020;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class StrategieDiScoringLibrerie {
 
 
 
-    public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
+    public BigDecimal getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
         //NOTE: potremmo passare il set dei libri rimasti per calcolare meglio la media
         int activityDays = numDays - signupStartDay - numDaysToSignup;
 
@@ -28,7 +29,7 @@ public class StrategieDiScoringLibrerie {
             if (Utility.getDebug()) {
                 System.out.print("La libreria non fa in tempo a tirar fuori neanche un libro");
             }
-            return 0f;
+            return BigDecimal.valueOf(0);
         }
 
         int maxBooksToSend = activityDays * booksPerDay;
@@ -41,7 +42,7 @@ public class StrategieDiScoringLibrerie {
 
     }
 
-    private float remainingDaysAfterFinishingBooks(Set<Integer> remainingBooks, int maxBooksToSend) {
+    private BigDecimal remainingDaysAfterFinishingBooks(Set<Integer> remainingBooks, int maxBooksToSend) {
         int num = 0;
         int sum = 0;
 
@@ -56,22 +57,22 @@ public class StrategieDiScoringLibrerie {
             }
         }
 
-        return 0;
+        return BigDecimal.valueOf(0);
     }
 
 
-    private float fastestToStartScore(){
-
-        return 1f/(float) this.numDaysToSignup;
+    private BigDecimal fastestToStartScore(){
+        BigDecimal temp= BigDecimal.valueOf(1);
+         return temp.divide(BigDecimal.valueOf(this.numDaysToSignup));
     }
 
-    private Float oldGetPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
+    private BigDecimal oldGetPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
         if(maxBooksToSend <= 0f){
-            return 0f;
+            return BigDecimal.valueOf(0);
         }
 
         int num = 0;
-        Float sum = 0f;
+        int sum = 0;
         for(Map.Entry<Integer, Integer> book : books.entrySet()){
             if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
                 num++;
@@ -85,6 +86,6 @@ public class StrategieDiScoringLibrerie {
             }
         }
 
-        return sum;
+        return BigDecimal.valueOf(sum);
     }
 }

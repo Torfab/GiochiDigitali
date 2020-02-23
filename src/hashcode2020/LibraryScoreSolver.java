@@ -1,5 +1,6 @@
 package hashcode2020;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class LibraryScoreSolver {
@@ -51,11 +52,11 @@ public class LibraryScoreSolver {
             }
             if(remainingSignupDays==0){
                 Library selectedLibrary = null;
-                float maxScore = 0f;
-                float currentScore;
+                BigDecimal maxScore = BigDecimal.valueOf(0);
+                BigDecimal currentScore;
                 for(Library lib : libraries){
                     currentScore = lib.getLibraryScore(numDays, day, books);  //qui conta
-                    if(currentScore > maxScore){
+                    if(currentScore.compareTo(maxScore)==1){
                         selectedLibrary = lib;
                         maxScore = currentScore;
                     }
