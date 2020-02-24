@@ -7,13 +7,13 @@ import static java.util.stream.Collectors.toMap;
 
 public class Library implements Comparable<Library>{
     private int idLibrary;
-    private Float numBooks;
+    private int numBooks;
     private int numDaysSignup;
     private int booksPerDay;
     private Map<Integer,Integer> books;
     private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
-    public Library (int idLibrary, Float numBooks, int numDaysSignup, int booksPerDay) {
+    public Library (int idLibrary, int numBooks, int numDaysSignup, int booksPerDay) {
         this.idLibrary = idLibrary;
         this.numBooks = numBooks;
         this.numDaysSignup = numDaysSignup;
@@ -22,11 +22,11 @@ public class Library implements Comparable<Library>{
         strategieDiScoringLibrerie=new StrategieDiScoringLibrerie(numDaysSignup, booksPerDay, books);
     }
 
-    public Float getNumBooks() {
+    public int getNumBooks() {
         return numBooks;
     }
 
-    public void setNumBooks(Float numBooks) {
+    public void setNumBooks(int numBooks) {
         this.numBooks = numBooks;
     }
 
@@ -71,6 +71,14 @@ public class Library implements Comparable<Library>{
             System.out.println("sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore);
         }
         return libraryScore;
+    }
+
+    public int getBooksOfLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
+        int booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, books);
+        if(Utility.getDebug()){
+            System.out.println("sto valutando i libri della libreria "+idLibrary+" il loro score è "+ booksOfLibraryScore);
+        }
+        return booksOfLibraryScore;
     }
 
 

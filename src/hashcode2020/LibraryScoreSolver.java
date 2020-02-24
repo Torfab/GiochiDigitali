@@ -55,14 +55,21 @@ public class LibraryScoreSolver {
                 float currentScore;
                 for(Library lib : libraries){
                     currentScore = lib.getLibraryScore(numDays, day, books);  //qui conta
+
                     if(currentScore > maxScore){
                         selectedLibrary = lib;
                         maxScore = currentScore;
                     }
+
+                    if (currentScore==maxScore && maxScore!=0f){
+                        if(selectedLibrary.getBooksOfLibraryScore(numDays, day, books)<lib.getBooksOfLibraryScore(numDays, day, books)){
+                            selectedLibrary = lib;
+                        }
+                    }
                 }
 
                 if(selectedLibrary != null){
-                    System.out.println("Siamo a giorno "+day+" è stata scelta la libreria "+selectedLibrary.getIdLibrary()+" con lo score di "+maxScore+" essa resterà in signup per "+selectedLibrary.getNumDaysSignup()+" giorni");
+                    //System.out.println("Siamo a giorno "+day+" è stata scelta la libreria "+selectedLibrary.getIdLibrary()+" con lo score di "+maxScore+" essa resterà in signup per "+selectedLibrary.getNumDaysSignup()+" giorni");
                     chosenLibraries.add(selectedLibrary);
                     libraries.remove(selectedLibrary);
                     remainingSignupDays=selectedLibrary.getNumDaysSignup();

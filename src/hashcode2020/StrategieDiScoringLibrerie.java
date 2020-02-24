@@ -36,28 +36,32 @@ public class StrategieDiScoringLibrerie {
         //return oldGetPotentialScore(books, maxBooksToSend);
         return fastestToStartScore();
         //return remainingDaysAfterFinishingBooks(books, maxBooksToSend);
-
-
-
     }
 
-    private float remainingDaysAfterFinishingBooks(Set<Integer> remainingBooks, int maxBooksToSend) {
-        int num = 0;
-        int sum = 0;
-
-        for(Map.Entry<Integer, Integer> book : books.entrySet()){
-            if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
-                num++;
-                sum += book.getValue();
-
-                if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
-                    break;
-                }
-            }
-        }
-
-        return 0;
+    public int getBooksOfLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
+        int activityDays = numDays - signupStartDay - numDaysToSignup;
+        int maxBooksToSend = activityDays * booksPerDay;
+        return (int) oldGetPotentialScore(books, maxBooksToSend);
     }
+
+
+//    private float remainingDaysAfterFinishingBooks(Set<Integer> remainingBooks, int maxBooksToSend) {
+//        int num = 0;
+//        int sum = 0;
+//
+//        for(Map.Entry<Integer, Integer> book : books.entrySet()){
+//            if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
+//                num++;
+//                sum += book.getValue();
+//
+//                if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return 0;
+//    }
 
 
     private float fastestToStartScore(){
@@ -65,7 +69,7 @@ public class StrategieDiScoringLibrerie {
         return 1f/(float) this.numDaysToSignup;
     }
 
-    private Float oldGetPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
+    private float oldGetPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
         if(maxBooksToSend <= 0f){
             return 0f;
         }
