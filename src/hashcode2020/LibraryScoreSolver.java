@@ -42,7 +42,7 @@ public class LibraryScoreSolver {
 
         for(int day = 0; day < numDays; day++){
             remainingSignupDays--;
-            if (Utility.getDebug()) {
+            if (Utility.isDebug()) {
                 if (remainingSignupDays < 0) {
                     System.out.println("Siamo a giorno " + day + ". Sono già state scelte tutte le librerie possibili");
                 } else {

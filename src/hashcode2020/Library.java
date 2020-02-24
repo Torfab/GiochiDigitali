@@ -67,7 +67,7 @@ public class Library implements Comparable<Library>{
 
     public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
         float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
-        if(Utility.getDebug()){
+        if(Utility.isDebug()){
             System.out.println("sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore);
         }
         return libraryScore;
@@ -75,7 +75,7 @@ public class Library implements Comparable<Library>{
 
     public int getBooksOfLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
         int booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, books);
-        if(Utility.getDebug()){
+        if(Utility.isDebug()){
             System.out.println("sto valutando i libri della libreria "+idLibrary+" il loro score è "+ booksOfLibraryScore);
         }
         return booksOfLibraryScore;

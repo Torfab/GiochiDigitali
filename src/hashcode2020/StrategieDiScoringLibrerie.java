@@ -25,7 +25,7 @@ public class StrategieDiScoringLibrerie {
 
         if(activityDays <= 0){
 
-            if (Utility.getDebug()) {
+            if (Utility.isDebug()) {
                 System.out.print("La libreria non fa in tempo a tirar fuori neanche un libro");
             }
             return 0f;
@@ -80,7 +80,7 @@ public class StrategieDiScoringLibrerie {
             if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
                 num++;
                 sum += book.getValue();
-                if(Utility.getDebug()) {
+                if(Utility.isDebug()) {
                     System.out.println("cosa sta contando? " + sum + " prova " + book); //BUGGONE!!!!!!! NON CONTROLLA SE IL LIBRO ESISTE
                 }
                 if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare

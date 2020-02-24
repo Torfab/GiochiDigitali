@@ -19,28 +19,49 @@ public class Hashcode2020 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
+
         MathSorcerer mathSorcerer;
-
-
         Scanner keyboard = new Scanner(System.in);
-        while (true) {
-            System.out.println("inserisci il nome del file di input contenuto nella cartella input della root: ");
-            String filename = keyboard.nextLine();
-            List<String[]> result = null;
+        List<String[]> result=null;
 
-            List<String[]> content = ReadFromFile.read(filename);
+        while (true) {
+
+            String filename = ReadFromKeyboard(keyboard);
+            List<String[]> content= readFromFile(filename);
 
             if (content != null) {
-                mathSorcerer=new MathSorcerer(content);
+                mathSorcerer = new MathSorcerer(content);
                 result = mathSorcerer.grind();
             }
 
             if (result != null) {
                 WriteToFile.write(result, filename);
             }
-
         }
-
     }
 
+    private static String ReadFromKeyboard(Scanner keyboard) {
+        System.out.println("inserisci il nome del file di input contenuto nella cartella input della root: ");
+        String[] keyboardInput = keyboard.nextLine().split(" ");
+        checkDebug(keyboardInput);
+        return keyboardInput[0];
+    }
+
+    private static List<String[]> readFromFile(String filename) throws Exception {
+
+        List<String[]> content = ReadFromFile.read(filename);
+        return content;
+    }
+
+    private static void checkDebug(String[] keyboardInput) {
+        if (keyboardInput.length>1) {
+            if (keyboardInput[1].equalsIgnoreCase("d")) {
+                Utility.setDebug(true);
+                return;
+            } else {
+                System.out.println("Proprietà "+keyboardInput[1]+"non riconosciuta, scrivi <d> per attivare debug");
+            }
+        }
+        Utility.setDebug(false);
+    }
 }
