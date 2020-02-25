@@ -12,6 +12,7 @@ public class LibraryProblemSolver {
     private SortedSet<Library> libraries;                           //è il set ordinato di tutte le librerie
     private List<Library> chosenLibraries = new ArrayList<>();      //Indica le librerie scelte (per l'output)
     private Map<Integer, ArrayList<Integer>> sentBooks;             //Indica i libri inviati per ogni libreria (per l'output) <idLibreria, List of books>
+    private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
     public LibraryProblemSolver(List<String[]> content) {
 
@@ -24,6 +25,8 @@ public class LibraryProblemSolver {
         String[] allBooksId = content.get(1);
         this.booksPool = fillBooksPool(allBooksId);                      //riempie booksPool con tutti i libri, verrà manipolato
         this.allBooks = new HashMap<>(this.booksPool);                //clona booksPool non verrà manipolato
+
+        this.strategieDiScoringLibrerie = new StrategieDiScoringLibrerie(booksPool);
 
         this.libraries = fillLibraries(content, numLibraries, booksPool);
 
@@ -54,7 +57,7 @@ public class LibraryProblemSolver {
             }
 
             if (selectedLibrary != null) {
-                System.out.println("Siamo a giorno " + day + " è stata scelta la libreria " + selectedLibrary.getIdLibrary() + " con lo score di " + maxScore + " essa resterà in signup per " + selectedLibrary.getNumDaysSignup() + " giorni");
+                System.out.println("Siamo a giorno " + day + " è stata scelta la libreria " + selectedLibrary.getIdLibrary() + " con lo score di " + maxScore + " essa resterà in signup per " + selectedLibrary.getNumDaysSignup() + " giorni. Il suo bookscore sarà di "+selectedLibrary.getBooksOfLibraryScore(numDays,day));
                 chosenLibraries.add(selectedLibrary);
                 libraries.remove(selectedLibrary);
                 day = day + selectedLibrary.getNumDaysSignup();
@@ -133,7 +136,7 @@ public class LibraryProblemSolver {
             int numDaysSignup = Integer.parseInt(content.get(rowIndex)[1]);
             int booksPerDay = Integer.parseInt(content.get(rowIndex)[2]);
 
-            library = new Library(index, numBooks, numDaysSignup, booksPerDay);
+            library = new Library(index, numBooks, numDaysSignup, booksPerDay, this.strategieDiScoringLibrerie);
             libraries.add(library);
 
             rowIndex++;

@@ -12,13 +12,13 @@ public class Library implements Comparable<Library>{
     private Map<Integer,Integer> remainingBooks;
     private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
-    public Library (int idLibrary, int numBooks, int numDaysSignup, int booksPerDay) {
+    public Library (int idLibrary, int numBooks, int numDaysSignup, int booksPerDay, StrategieDiScoringLibrerie strategieDiScoringLibrerie) {
         this.idLibrary = idLibrary;
         this.numBooks = numBooks;
         this.numDaysSignup = numDaysSignup;
         this.booksPerDay = booksPerDay;
         remainingBooks = new HashMap<>();
-        strategieDiScoringLibrerie=new StrategieDiScoringLibrerie(numDaysSignup, booksPerDay, remainingBooks);
+        this.strategieDiScoringLibrerie=strategieDiScoringLibrerie;
     }
 
     public int getNumDaysSignup() {
@@ -45,15 +45,15 @@ public class Library implements Comparable<Library>{
     }
 
     public float getLibraryScore(int numDays, int signupStartDay){
-        float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, remainingBooks.keySet());
-        if(true||Utility.isDebug())
+        float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, this.remainingBooks.keySet());
+        if(Utility.isDebug())
             Utility.debugLog("Sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore + ". Possiede "+remainingBooks.size()+" libri. I libri sono "+remainingBooks+ " lo score totale è "+getBooksOfLibraryScore(numDays,numDaysSignup));
         return libraryScore;
     }
 
     public int getBooksOfLibraryScore(int numDays, int signupStartDay){
 
-        int booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, remainingBooks.keySet());
+        int booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, remainingBooks.keySet());
 
         if(Utility.isDebug()){
             Utility.debugLog("sto valutando i libri della libreria "+idLibrary+" il loro score è "+ booksOfLibraryScore);

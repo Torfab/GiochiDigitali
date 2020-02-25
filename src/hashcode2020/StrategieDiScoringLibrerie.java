@@ -4,22 +4,19 @@ import java.util.Map;
 import java.util.Set;
 
 public class StrategieDiScoringLibrerie {
-    private int numDaysToSignup;
-    private int booksPerDay;
+
     private Map<Integer,Integer> books;
 
 
-    public StrategieDiScoringLibrerie(int numDaysToSignup, int booksPerDay, Map<Integer,Integer> books){
+    public StrategieDiScoringLibrerie(Map<Integer,Integer> books){
 
-        this.numDaysToSignup = numDaysToSignup;
-        this.booksPerDay=booksPerDay;
         this.books=books;
 
     }
 
 
 
-    public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
+    public float getLibraryScore(int numDays, int signupStartDay, int numDaysToSignup, int booksPerDay, Set<Integer> books){
         //NOTE: potremmo passare il set dei libri rimasti per calcolare meglio la media
         int activityDays = numDays - signupStartDay - numDaysToSignup;
 
@@ -34,11 +31,11 @@ public class StrategieDiScoringLibrerie {
         int maxBooksToSend = activityDays * booksPerDay;
 
         //return oldGetPotentialScore(books, maxBooksToSend);
-        return fastestToStartScore();
+        return fastestToStartScore(numDaysToSignup);
         //return remainingDaysAfterFinishingBooks(books, maxBooksToSend);
     }
 
-    public int getBooksOfLibraryScore(int numDays, int signupStartDay, Set<Integer> remainingBooks){
+    public int getBooksOfLibraryScore(int numDays, int signupStartDay, int numDaysToSignup, int booksPerDay, Set<Integer> remainingBooks){
         int activityDays = numDays - signupStartDay - numDaysToSignup;
         int maxBooksToSend = activityDays * booksPerDay;
         return (int) oldGetPotentialScore(remainingBooks, maxBooksToSend);
@@ -64,9 +61,9 @@ public class StrategieDiScoringLibrerie {
 //    }
 
 
-    private float fastestToStartScore(){
+    private float fastestToStartScore(int numDaysToSignup){
 
-        return 1f/(float) this.numDaysToSignup;
+        return 1f/(float) numDaysToSignup;
     }
 
     private float oldGetPotentialScore(Set<Integer> remainingBooks, int maxBooksToSend){
@@ -80,16 +77,14 @@ public class StrategieDiScoringLibrerie {
             if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
                 num++;
                 sum += book.getValue();
-                if(true||Utility.isDebug()) {
+                if(Utility.isDebug()) {
                     Utility.debugLog("cosa sta contando? " + sum + " prova " + book);
                 }
                 if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
                     break;
                 }
             }else{
-                System.out.println("prima " +remainingBooks);
                 remainingBooks.remove(book);
-                System.out.println("dopo "+ remainingBooks);
             }
         }
 
