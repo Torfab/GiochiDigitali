@@ -14,6 +14,7 @@ public class LibraryProblemSolver {
     private Map<Integer, ArrayList<Integer>> sentBooks;             //Indica i libri inviati per ogni libreria (per l'output) <idLibreria, List of books>
     private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
+
     public LibraryProblemSolver(List<String[]> content) {
 
         this.numLibraries = Integer.parseInt(content.get(0)[1]);     //Inserisce il numero delle Librerie dal primo elemento della prima riga
@@ -46,8 +47,8 @@ public class LibraryProblemSolver {
                     maxScore = currentScore;
                 }
 
-                if (currentScore == maxScore && maxScore != 0f) {
-                    int selectedLibraryBookScore=selectedLibrary.getBooksOfLibraryScore(numDays, day);
+                if (currentScore == maxScore && currentScore >0) {
+                    int selectedLibraryBookScore=selectedLibrary.getBooksOfLibraryScore(numDays, day); //BUGGONE NON POSSO PRENDERE LO SCORE DELLA VECCHIA
                     int libBookScore=selectedLibrary.getBooksOfLibraryScore(numDays, day);
                     if (selectedLibraryBookScore < libBookScore) {
                         System.out.println("La nuova libreria considerata è migliore di "+(libBookScore-selectedLibraryBookScore));
