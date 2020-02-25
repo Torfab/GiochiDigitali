@@ -2,7 +2,6 @@ package hashcode2020;
 
 import java.util.*;
 
-import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toMap;
 
 public class Library implements Comparable<Library>{
@@ -10,7 +9,7 @@ public class Library implements Comparable<Library>{
     private int numBooks;
     private int numDaysSignup;
     private int booksPerDay;
-    private Map<Integer,Integer> books;
+    private Map<Integer,Integer> remainingBooks;
     private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
     public Library (int idLibrary, int numBooks, int numDaysSignup, int booksPerDay) {
@@ -18,36 +17,16 @@ public class Library implements Comparable<Library>{
         this.numBooks = numBooks;
         this.numDaysSignup = numDaysSignup;
         this.booksPerDay = booksPerDay;
-        books = new HashMap<>();
-        strategieDiScoringLibrerie=new StrategieDiScoringLibrerie(numDaysSignup, booksPerDay, books);
-    }
-
-    public int getNumBooks() {
-        return numBooks;
-    }
-
-    public void setNumBooks(int numBooks) {
-        this.numBooks = numBooks;
+        remainingBooks = new HashMap<>();
+        strategieDiScoringLibrerie=new StrategieDiScoringLibrerie(numDaysSignup, booksPerDay, remainingBooks);
     }
 
     public int getNumDaysSignup() {
         return numDaysSignup;
     }
 
-    public void setNumDaysSignup(int numDaysSignup) {
-        this.numDaysSignup = numDaysSignup;
-    }
-
-    public int getBooksPerDay() {
-        return booksPerDay;
-    }
-
-    public void setBooksPerDay(int booksPerDay) {
-        this.booksPerDay = booksPerDay;
-    }
-
     public void addBook(int id, int score){
-        this.books.put(id,score);
+        this.remainingBooks.put(id,score);
     }
 
     @Override
@@ -56,7 +35,7 @@ public class Library implements Comparable<Library>{
                 "numBooks=" + numBooks +
                 ", numDaysSignup=" + numDaysSignup +
                 ", booksPerDay=" + booksPerDay +
-                ", books=" + books +
+                ", books=" + remainingBooks +
                 '}';
     }
 
@@ -65,18 +44,19 @@ public class Library implements Comparable<Library>{
         return Integer.compare(this.idLibrary, other.idLibrary);
     }
 
-    public float getLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
-        float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, books);
-        if(Utility.isDebug()){
-            System.out.println("sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore);
-        }
+    public float getLibraryScore(int numDays, int signupStartDay){
+        float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, remainingBooks.keySet());
+        if(true||Utility.isDebug())
+            Utility.debugLog("Sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore + ". Possiede "+remainingBooks.size()+" libri. I libri sono "+remainingBooks+ " lo score totale è "+getBooksOfLibraryScore(numDays,numDaysSignup));
         return libraryScore;
     }
 
-    public int getBooksOfLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
-        int booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, books);
+    public int getBooksOfLibraryScore(int numDays, int signupStartDay){
+
+        int booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, remainingBooks.keySet());
+
         if(Utility.isDebug()){
-            System.out.println("sto valutando i libri della libreria "+idLibrary+" il loro score è "+ booksOfLibraryScore);
+            Utility.debugLog("sto valutando i libri della libreria "+idLibrary+" il loro score è "+ booksOfLibraryScore);
         }
         return booksOfLibraryScore;
     }
@@ -87,28 +67,17 @@ public class Library implements Comparable<Library>{
         return idLibrary;
     }
 
-    public void setIdLibrary(int idLibrary) {
-        this.idLibrary = idLibrary;
-    }
-
-    public Map<Integer, Integer> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Map<Integer, Integer> books) {
-        this.books = books;
-    }
 
     public ArrayList<Integer> getBooksToSend(Set<Integer> remainingBooks, int activationDay, int totalDay){
         int activityDay = totalDay - activationDay- numDaysSignup;
         int numSent = 0;
         int totalBooksToSend = activityDay * booksPerDay;
-        ArrayList<Integer> ret =  new ArrayList<Integer>();
+        ArrayList<Integer> ret =  new ArrayList<>();
 
-        Map<Integer, Integer> sorted = this.books.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
+        Map<Integer, Integer> sorted = this.remainingBooks.entrySet().stream().sorted((integerIntegerEntry, t1) -> t1.getValue().compareTo(integerIntegerEntry.getValue())).collect(
                 toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
                         LinkedHashMap::new));
-        //BUG CONTROLLA IL VETTORE SBAGLIATO E QUI I BOOK NON VENGONO MAI RIMOSSI
+
         for(Integer i : sorted.keySet()){
             if(remainingBooks.contains(i)){
                 ret.add(i);

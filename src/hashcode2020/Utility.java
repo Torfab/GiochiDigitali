@@ -17,4 +17,8 @@ public final class Utility {
     public static void setDebug(boolean isDebug){
         debug=isDebug;
     }
+
+    public static void debugLog(String log){
+        System.out.println("[DEBUG] "+ log);
+    }
 }

@@ -38,10 +38,10 @@ public class StrategieDiScoringLibrerie {
         //return remainingDaysAfterFinishingBooks(books, maxBooksToSend);
     }
 
-    public int getBooksOfLibraryScore(int numDays, int signupStartDay, Set<Integer> books){
+    public int getBooksOfLibraryScore(int numDays, int signupStartDay, Set<Integer> remainingBooks){
         int activityDays = numDays - signupStartDay - numDaysToSignup;
         int maxBooksToSend = activityDays * booksPerDay;
-        return (int) oldGetPotentialScore(books, maxBooksToSend);
+        return (int) oldGetPotentialScore(remainingBooks, maxBooksToSend);
     }
 
 
@@ -80,12 +80,16 @@ public class StrategieDiScoringLibrerie {
             if(remainingBooks.contains(book.getKey())){ //Se è ancora da mandare
                 num++;
                 sum += book.getValue();
-                if(Utility.isDebug()) {
-                    System.out.println("cosa sta contando? " + sum + " prova " + book); //BUGGONE!!!!!!! NON CONTROLLA SE IL LIBRO ESISTE
+                if(true||Utility.isDebug()) {
+                    Utility.debugLog("cosa sta contando? " + sum + " prova " + book);
                 }
                 if(num == maxBooksToSend){ //Se ho raggiunto il num massimo di libri che potrò mandare
                     break;
                 }
+            }else{
+                System.out.println("prima " +remainingBooks);
+                remainingBooks.remove(book);
+                System.out.println("dopo "+ remainingBooks);
             }
         }
 

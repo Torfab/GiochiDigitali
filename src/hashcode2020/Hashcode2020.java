@@ -20,7 +20,7 @@ public class Hashcode2020 {
      */
     public static void main(String[] args) throws Exception {
 
-        MathSorcerer mathSorcerer;
+        LibraryProblemSolver libraryProblemSolver;
         Scanner keyboard = new Scanner(System.in);
         List<String[]> result=null;
 
@@ -30,8 +30,8 @@ public class Hashcode2020 {
             List<String[]> content= readFromFile(filename);
 
             if (content != null) {
-                mathSorcerer = new MathSorcerer(content);
-                result = mathSorcerer.grind();
+                libraryProblemSolver = new LibraryProblemSolver(content);
+                result = libraryProblemSolver.grind();
             }
 
             if (result != null) {
