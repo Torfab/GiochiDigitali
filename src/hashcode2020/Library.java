@@ -1,5 +1,7 @@
 package hashcode2020;
 
+import javafx.util.Pair;
+
 import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
@@ -44,16 +46,18 @@ public class Library implements Comparable<Library>{
         return Integer.compare(this.idLibrary, other.idLibrary);
     }
 
-    public float getLibraryScore(int numDays, int signupStartDay){
-        float libraryScore=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, this.remainingBooks.keySet());
-        if(Utility.isDebug())
-            Utility.debugLog("Sto valutando la libreria "+idLibrary+" il suo score è "+ libraryScore + ". Possiede "+remainingBooks.size()+" libri. I libri sono "+remainingBooks+ " lo score totale è "+getBooksOfLibraryScore(numDays,numDaysSignup));
-        return libraryScore;
+    public Pair<Float, Float> getLibraryScore(int numDays, int signupStartDay){
+        Pair<Float, Float> score=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, this.remainingBooks.keySet());
+
+        if(Utility.isDebug()) {
+            Utility.debugLog("Sto valutando la libreria " + idLibrary + " il suo score è " + score.getKey() + ". Possiede " + remainingBooks.size() + " libri. I libri sono " + remainingBooks + " lo score totale è " + score.getValue());
+        }
+        return score;
     }
 
-    public int getBooksOfLibraryScore(int numDays, int signupStartDay){
+    public float getBooksOfLibraryScore(int numDays, int signupStartDay){
 
-        int booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, remainingBooks.keySet());
+        float booksOfLibraryScore=strategieDiScoringLibrerie.getBooksOfLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, remainingBooks.keySet());
 
         if(Utility.isDebug()){
             Utility.debugLog("sto valutando i libri della libreria "+idLibrary+" il loro score è "+ booksOfLibraryScore);

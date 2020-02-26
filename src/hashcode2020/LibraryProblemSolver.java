@@ -1,5 +1,7 @@
 package hashcode2020;
 
+import javafx.util.Pair;
+
 import java.util.*;
 
 public class LibraryProblemSolver {
@@ -29,7 +31,7 @@ public class LibraryProblemSolver {
 
         this.strategieDiScoringLibrerie = new StrategieDiScoringLibrerie(booksPool);
 
-        this.libraries = fillLibraries(content, numLibraries, booksPool);
+        this.libraries = fillLibraries(content, numLibraries, allBooks);
 
     }
 
@@ -37,43 +39,50 @@ public class LibraryProblemSolver {
     public List<String[]> grind() {
         for (int day = 0; day < numDays; ) {
             Library selectedLibrary = null;
-            float maxScore = 0f;
-            float currentScore;
+            Pair<Float, Float> selectedScore = new Pair<>(0f, 0f);
+            Pair<Float, Float> currentScore;
             for (Library lib : libraries) {
-                currentScore = lib.getLibraryScore(numDays, day);  //GET SCORE
+                currentScore = lib.getLibraryScore(numDays, day);
 
-                if (currentScore > maxScore) {
+
+                if (currentScore.getKey() > selectedScore.getKey()) {
                     selectedLibrary = lib;
-                    maxScore = currentScore;
+                    selectedScore = currentScore;
                 }
 
-                if (currentScore == maxScore && currentScore >0) {
-                    int selectedLibraryBookScore=selectedLibrary.getBooksOfLibraryScore(numDays, day); //BUGGONE NON POSSO PRENDERE LO SCORE DELLA VECCHIA
-                    int libBookScore=selectedLibrary.getBooksOfLibraryScore(numDays, day);
-                    if (selectedLibraryBookScore < libBookScore) {
-                        System.out.println("La nuova libreria considerata è migliore di "+(libBookScore-selectedLibraryBookScore));
+                if (currentScore.getKey().equals(selectedScore.getKey()) && currentScore.getKey() > 0f) {
+
+                    if (selectedScore.getValue() < currentScore.getValue()) {
+                        if(Utility.isDebug()) {
+                            Utility.debugLog("La nuova libreria considerata è migliore di " + (currentScore.getValue() - selectedScore.getValue()));
+                        }
+
                         selectedLibrary = lib;
+                        selectedScore = currentScore;
                     }
                 }
             }
 
             if (selectedLibrary != null) {
-                System.out.println("Siamo a giorno " + day + " è stata scelta la libreria " + selectedLibrary.getIdLibrary() + " con lo score di " + maxScore + " essa resterà in signup per " + selectedLibrary.getNumDaysSignup() + " giorni. Il suo bookscore sarà di "+selectedLibrary.getBooksOfLibraryScore(numDays,day));
+                System.out.println("Siamo a giorno " + day + " è stata scelta la libreria " + selectedLibrary.getIdLibrary() + " con lo score di " + selectedScore + " essa resterà in signup per " + selectedLibrary.getNumDaysSignup() + " giorni. Il suo bookscore sarà di " + selectedLibrary.getBooksOfLibraryScore(numDays, day));
                 chosenLibraries.add(selectedLibrary);
                 libraries.remove(selectedLibrary);
                 day = day + selectedLibrary.getNumDaysSignup();
-                ArrayList<Integer> mbareTiPregoOgniCicloSoSordi = selectedLibrary.getBooksToSend(booksPool.keySet(), day, numDays);
-                sentBooks.put(selectedLibrary.getIdLibrary(), mbareTiPregoOgniCicloSoSordi);
+                ArrayList<Integer> booksToSend = selectedLibrary.getBooksToSend(booksPool.keySet(), day, numDays);
+                sentBooks.put(selectedLibrary.getIdLibrary(), booksToSend);
 
-                for (Integer id : mbareTiPregoOgniCicloSoSordi) {
+                for (Integer id : booksToSend) {
                     booksPool.keySet().remove(id);
                 }
             } else {
-                System.out.println("Siamo a giorno " + day +" su "+numDays+ " giorni e non è più possibile registrare le restanti librerie");
+                System.out.println("Siamo a giorno " + day + " su " + numDays + " giorni e non è più possibile registrare le restanti librerie");
                 break;
             }
         }
-        return resultConverter();
+        return
+
+                resultConverter();
+
     }
 
 
