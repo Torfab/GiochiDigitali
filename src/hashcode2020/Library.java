@@ -46,8 +46,8 @@ public class Library implements Comparable<Library>{
         return Integer.compare(this.idLibrary, other.idLibrary);
     }
 
-    public Pair<Float, Float> getLibraryScore(int numDays, int signupStartDay){
-        Pair<Float, Float> score=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, this.remainingBooks.keySet());
+    public Pair<Float, Integer> getLibraryScore(int numDays, int signupStartDay){
+        Pair<Float, Integer> score=strategieDiScoringLibrerie.getLibraryScore(numDays, signupStartDay, this.numDaysSignup, this.booksPerDay, this.remainingBooks.keySet());
 
         if(Utility.isDebug()) {
             Utility.debugLog("Sto valutando la libreria " + idLibrary + " il suo score è " + score.getKey() + ". Possiede " + remainingBooks.size() + " libri. I libri sono " + remainingBooks + " lo score totale è " + score.getValue());

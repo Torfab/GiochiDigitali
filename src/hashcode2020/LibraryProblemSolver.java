@@ -16,6 +16,7 @@ public class LibraryProblemSolver {
     private Map<Integer, ArrayList<Integer>> sentBooks;             //Indica i libri inviati per ogni libreria (per l'output) <idLibreria, List of books>
     private StrategieDiScoringLibrerie strategieDiScoringLibrerie;
 
+    private int result;
 
     public LibraryProblemSolver(List<String[]> content) {
 
@@ -33,14 +34,16 @@ public class LibraryProblemSolver {
 
         this.libraries = fillLibraries(content, numLibraries, allBooks);
 
+        this.result = 0;
+
     }
 
 
     public List<String[]> grind() {
         for (int day = 0; day < numDays; ) {
             Library selectedLibrary = null;
-            Pair<Float, Float> selectedScore = new Pair<>(0f, 0f);
-            Pair<Float, Float> currentScore;
+            Pair<Float, Integer> selectedScore = new Pair<>(0f, 0);
+            Pair<Float, Integer> currentScore;
             for (Library lib : libraries) {
                 currentScore = lib.getLibraryScore(numDays, day);
 
@@ -53,7 +56,7 @@ public class LibraryProblemSolver {
                 if (currentScore.getKey().equals(selectedScore.getKey()) && currentScore.getKey() > 0f) {
 
                     if (selectedScore.getValue() < currentScore.getValue()) {
-                        if(Utility.isDebug()) {
+                        if (Utility.isDebug()) {
                             Utility.debugLog("La nuova libreria considerata è migliore di " + (currentScore.getValue() - selectedScore.getValue()));
                         }
 
@@ -71,6 +74,8 @@ public class LibraryProblemSolver {
                 ArrayList<Integer> booksToSend = selectedLibrary.getBooksToSend(booksPool.keySet(), day, numDays);
                 sentBooks.put(selectedLibrary.getIdLibrary(), booksToSend);
 
+                result += selectedScore.getValue();
+
                 for (Integer id : booksToSend) {
                     booksPool.keySet().remove(id);
                 }
@@ -79,9 +84,8 @@ public class LibraryProblemSolver {
                 break;
             }
         }
-        return
-
-                resultConverter();
+        System.out.println("il risultato libreria per libreria è "+ result);
+        return resultConverter();
 
     }
 

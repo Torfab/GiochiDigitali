@@ -18,15 +18,15 @@ public class StrategieDiScoringLibrerie {
     }
 
 
-    public Pair<Float, Float> getLibraryScore(int numDays, int signupStartDay, int numDaysToSignup, int booksPerDay, Set<Integer> remainingBooks) {
+    public Pair<Float, Integer> getLibraryScore(int numDays, int signupStartDay, int numDaysToSignup, int booksPerDay, Set<Integer> remainingBooks) {
 
 
 
         float libraryScore = fastestToStartScore(numDaysToSignup);
-        float bookValue = getBooksOfLibraryScore(numDays, signupStartDay, numDaysToSignup, booksPerDay, remainingBooks);
+        int bookValue = getBooksOfLibraryScore(numDays, signupStartDay, numDaysToSignup, booksPerDay, remainingBooks);
 
-        if(bookValue==0f){
-            return new Pair<>(0f,0f);
+        if(bookValue==0){
+            return new Pair<>(0f,0);
         }
 
         return new Pair<>(libraryScore, bookValue);
@@ -38,30 +38,30 @@ public class StrategieDiScoringLibrerie {
     }
 
 
-    public float getBooksOfLibraryScore(int numDays, int signupStartDay, int numDaysToSignup, int booksPerDay, Set<Integer> remainingBooks) {
+    public int getBooksOfLibraryScore(int numDays, int signupStartDay, int numDaysToSignup, int booksPerDay, Set<Integer> remainingBooks) {
         int activityDays = numDays - signupStartDay - numDaysToSignup;
         if (activityDays <= 0) {
             if (Utility.isDebug()) {
                 System.out.print("La libreria non fa in tempo a tirar fuori neanche un libro");
             }
-            return 0f;
+            return 0;
         }
         int maxBooksToSend = activityDays * booksPerDay;
         if (maxBooksToSend <= 0f) {
-            return 0f;
+            return 0;
         }
 
 
         Set<Integer> booksToRemove=new HashSet<>();
-        Float sum = sumOfBooksScore(remainingBooks, maxBooksToSend, booksToRemove);
+        int sum = sumOfBooksScore(remainingBooks, maxBooksToSend, booksToRemove);
         removeChosenBooks(remainingBooks, booksToRemove);
 
         return sum;
     }
 
-    private Float sumOfBooksScore(Set<Integer> remainingBooks, int maxBooksToSend, Set<Integer> booksToRemove) {
+    private int sumOfBooksScore(Set<Integer> remainingBooks, int maxBooksToSend, Set<Integer> booksToRemove) {
         int num = 0;
-        Float sum = 0f;
+        int sum = 0;
 
 
         for (Integer remainingBook : remainingBooks) {
